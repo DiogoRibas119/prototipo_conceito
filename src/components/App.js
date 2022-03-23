@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 //import { create } from 'ipfs-http-client'
 //const ipfs = create(new URL('http://172.31.3.80:5001'))
@@ -14,7 +13,8 @@ class App extends Component {
     super(props)
 
     this.state = {
-      buffer: null
+      buffer: null,
+      mainPic: ''
     }
   }
 
@@ -34,6 +34,7 @@ class App extends Component {
     console.log("submit")
     ipfs.add(this.state.buffer, (error, result) => {
       console.log("resultado", result)
+      this.setState({mainPic: result[0].hash})
       if(error) {
         console.error(error)
         return
@@ -45,7 +46,7 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />          
+          <img src={`http://172.31.3.80:8080/ipfs/${this.state.mainPic}`} alt="Alt text" height={500}/>          
           <p></p><p></p><p></p><p></p>
           <h2>Add File</h2>
           <form onSubmit={this.onSubmit} >
