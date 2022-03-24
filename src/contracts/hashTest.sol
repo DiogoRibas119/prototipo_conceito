@@ -1,16 +1,17 @@
 
-pragma solidity 0.8.13;
+pragma solidity ^0.5.15;
 
 
 contract hashTest {
     string varHash;
+
     
     // Write Function
     function set(string memory _varHash) public {
         varHash = _varHash;
     }
     //Read Function
-    function get() public view returns(string memory){  
+    function get() public view returns (string memory) {  
         return varHash;
     }
 }
