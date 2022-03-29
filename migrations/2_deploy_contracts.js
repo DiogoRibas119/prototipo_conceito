@@ -1,4 +1,4 @@
-const hashTest = artifacts.require("hashTest");
+const hashTest = artifacts.require("fileStorage");
 
 module.exports = function (deployer) {
   deployer.deploy(hashTest);
