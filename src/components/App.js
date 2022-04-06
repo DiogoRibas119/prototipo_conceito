@@ -5,8 +5,6 @@ import hashTest from '../abis/fileStorage.json';
 
 const ipfsClient = require('ipfs-http-client')
 const ipfs = ipfsClient({ host: '172.31.3.80', port: 5001, protocol: 'http' }) 
-const elements = [] 
-const items = []
 //ganache-cli --port 7545 -h 172.31.3.84 -i 123456 -v
 class App extends Component {
 
@@ -33,7 +31,7 @@ class App extends Component {
 
   async loadBlockchainData() {
       const web3 = window.web3  
-      const privateKey = '0xdd5ce851193e5629f6fe300eba85c35a7e31b29d78e1b08ac97c8f55ed737af7' // Get PrivKey from ganache for now
+      const privateKey = '0xaeb0a9fd852815e58e6a70ac5ab9e30acebb55cbbace1bc4b74b83bc86dee3b5' // Get PrivKey from ganache for now
       const accounts = web3.eth.accounts.privateKeyToAccount(privateKey)
       this.setState({ account: accounts.address})
       const netId =   await web3.eth.net.getId()  
@@ -46,8 +44,8 @@ class App extends Component {
           const counter = await contract.methods.getCounter().call()
           console.log(counter)
           this.setState({counter})
-          //const mainPic = await contract.methods.get().call()
-          //this.setState({mainPic})
+          const mainPic = await contract.methods.get("1").call()
+          this.setState({mainPic})
           
       } else {
         window.alert('Contract not deployed. Run truffle Migrate on console')
@@ -81,23 +79,6 @@ class App extends Component {
       })
       
     })
-    /*
-    console.log('where does it break?')
-    const counter = this.state.contract.methods.getCounter().call()
-    console.log('counter',counter)
-    this.setState({counter})
-    console.log('how about here?')
-    for (let i = 1; i < counter; i++) {
-      console.log('do you arrive here?')
-      const temp = this.state.contract.methods.get(i).send({from: this.state.account})
-      elements.push(temp);  
-      console.log(temp)
-    }
-    for (const value of elements) {
-      console.log(value)
-      items.push(<img src={`http://172.31.3.80:8080/ipfs/${value}`} width={100} height={100} alt="Dread"/>)
-    }
-    */
   } 
 
   imageSet = async (event) => {
@@ -105,7 +86,10 @@ class App extends Component {
     const idCounter = this.state.bufferInt
     const idHash = await this.state.contract.methods.get(idCounter).call()
     console.log(idHash)
-    this.setState({mainPic: idHash})
+    this.setState({mainPic: idHash})  
+    const web3 = window.web3
+    const temp = await web3.eth.getBalance(this.state.account)
+    console.log(temp)
   }
 
 
@@ -115,7 +99,6 @@ class App extends Component {
     this.setState({bufferInt: _Id})
   }
   
-
 
   //<img src={`http://172.31.3.80:8080/ipfs/${this.state.mainPic}`} alt="Alt text" height={500}/>
   render() {

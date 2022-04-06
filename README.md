@@ -1,4 +1,16 @@
-# Everything is fine here no need to check
+# Prototipo de Storage de Imagens com IPFS e Blockchain
+
+Start IPFS server na Maquina onde estiver, e mudar o IP e Port adequadamente na App.js
+
+Start Ganache na Cli com o comando comentado no App.js
+
+Copiar uma Private Key do Ganache para o App.js
+
+Troufle migrate --reset para dar deploy dos contratos na Cli
+
+Save, npm run start, and be happy with your list of memes
+
+# The Classic React stuff
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
